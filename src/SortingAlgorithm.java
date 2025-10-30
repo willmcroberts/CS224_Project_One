@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class SortingAlgorithm {
@@ -100,4 +101,55 @@ public class SortingAlgorithm {
             buildHeapify(empList, n, largest);
         } // End if statement
     } // End buildHeapify
+
+    // Method 9
+    public void selectionSort(List<Employee> empList) {
+        int n = empList.size();
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (empList.get(j).getAge() < empList.get(minIndex).getAge()) {
+                    minIndex = j;
+                }
+            } // End inner loop
+            swap(empList, i, minIndex);
+        } // End outer loop
+    } // End selectionSort()
+
+    // Method 10
+    public void mergeSort(List<Employee> empList) {
+        if (empList.size() <= 1) {
+            return;
+        }
+        int mid = empList.size() / 2;
+
+        List<Employee> left = new ArrayList<>(empList.subList(0, mid));
+        List<Employee> right = new ArrayList<>(empList.subList(mid, empList.size()));
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(empList, left, right);
+    } // End mergeSort()
+
+
+    // Method 11
+    private void merge(List<Employee> empList, List<Employee> left, List<Employee> right) {
+        int i = 0, j = 0, k = 0;
+        while (i < left.size() && j < right.size()) {
+            if (left.get(i).getAge() <= right.get(j).getAge()) {
+                empList.set(k++, left.get(i++));
+            } else {
+                empList.set(k++, right.get(j++));
+            }
+        } // End while loop
+
+        while (i < left.size()) {
+            empList.set(k++, left.get(i++));
+        } // End while loop
+
+        while (j < right.size()) {
+            empList.set(k++, right.get(j++));
+        } // End while loop
+    } // End merge()
 } // End SortingAlgorithm
